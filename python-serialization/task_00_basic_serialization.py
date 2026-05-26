@@ -1,30 +1,16 @@
 #!/usr/bin/env python3
-"""Basic serialization"""
+"""Basic serialization module."""
+
+import json
 
 
 def serialize_and_save_to_file(data, filename):
-    """Serializes an object to a JSON file
-
-    Args:
-        data: The object to serialize
-        filename: The name of the file to save the JSON string to
-    """
-    import json
-
-    with open(filename, 'w') as f:
-        json.dump(data, f)
+    """Serialize a Python dictionary and save it to a JSON file."""
+    with open(filename, "w") as file:
+        json.dump(data, file)
 
 
 def load_and_deserialize(filename):
-    """Deserializes a JSON file to an object
-
-    Args:
-        filename: The name of the file to load the JSON string from
-
-    Returns:
-        The deserialized object
-    """
-    import json
-
-    with open(filename, 'r') as f:
-        return json.load(f)
+    """Load JSON data from a file and return it as a Python dictionary."""
+    with open(filename, "r") as file:
+        return json.load(file)
