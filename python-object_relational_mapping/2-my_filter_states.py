@@ -29,9 +29,9 @@ if __name__ == "__main__":
     cursor = db.cursor()
 
     # Build the SQL query using format as requested by the task
-    query = "SELECT * FROM states WHERE name ="
-    " '{}' ORDER BY states.id ASC".format(
-        state_name
+    query = (
+        "SELECT * FROM states WHERE name = '{}' "
+        "ORDER BY states.id ASC".format(state_name)
     )
 
     # Execute the SQL query
