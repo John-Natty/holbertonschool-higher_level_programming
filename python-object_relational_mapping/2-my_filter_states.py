@@ -29,7 +29,7 @@ if __name__ == "__main__":
 
     # Build the SQL query using format as requested by the task
     query = (
-        "SELECT * FROM states WHERE name = '{}' "
+        "SELECT * FROM states WHERE name LIKE BINARY '{}' "
         "ORDER BY states.id ASC"
     ).format(state_name)
 
