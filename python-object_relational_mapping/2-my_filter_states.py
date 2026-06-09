@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """This module lists states matching a user-provided name."""
 
-
 import MySQLdb
 import sys
 
