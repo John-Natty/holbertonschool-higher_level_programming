@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""This module lists states whose names start with N."""
+"""This module lists states whose names start with uppercase N."""
 
 import MySQLdb
 import sys
@@ -11,7 +11,7 @@ if __name__ == "__main__":
     password = sys.argv[2]
     database = sys.argv[3]
 
-    # Connect to the MySQL server
+    # Connect to the MySQL server running on localhost
     db = MySQLdb.connect(
         host="localhost",
         port=3306,
@@ -24,16 +24,18 @@ if __name__ == "__main__":
     # Create a cursor to execute SQL queries
     cursor = db.cursor()
 
-    # Execute the SQL query that filters states starting with uppercase N
-    cursor.execute("SELECT * FROM states WHERE name LIKE 'N%' ORDER BY id ASC")
+    # Select states whose names start exactly with uppercase N
+    cursor.execute(
+        "SELECT * FROM states WHERE name LIKE BINARY 'N%' ORDER BY id ASC"
+    )
 
-    # Fetch all matching rows
+    # Fetch all rows returned by the query
     rows = cursor.fetchall()
 
-    # Display each row as expected
+    # Display each row exactly as a tuple
     for row in rows:
         print(row)
 
-    # Close the cursor and the connection
+    # Close the cursor and the database connection
     cursor.close()
     db.close()
