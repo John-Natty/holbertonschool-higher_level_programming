@@ -1,18 +1,16 @@
 #!/usr/bin/python3
-"""This module lists states whose names start with N."""
-
+"""
+Module that lists all states with names starting with N from hbtn_0e_0_usa
+"""
 import MySQLdb
 import sys
 
-
 if __name__ == "__main__":
-    # Get MySQL connection information from command line arguments
     username = sys.argv[1]
     password = sys.argv[2]
     database = sys.argv[3]
 
-    # Connect to the MySQL server running on localhost
-    db = MySQLdb.connect(
+    conn = MySQLdb.connect(
         host="localhost",
         port=3306,
         user=username,
@@ -21,19 +19,14 @@ if __name__ == "__main__":
         charset="utf8"
     )
 
-    # Create a cursor to execute SQL queries
-    cursor = db.cursor()
+    cur = conn.cursor()
 
-    # Select all states whose names start with N
-    cursor.execute("SELECT * FROM states WHERE name LIKE 'N%' ORDER BY id ASC")
+    cur.execute("SELECT * FROM states WHERE name LIKE 'N%' ORDER BY id ASC")
 
-    # Fetch all rows returned by the query
-    rows = cursor.fetchall()
+    query_rows = cur.fetchall()
 
-    # Display each row exactly as a tuple
-    for row in rows:
+    for row in query_rows:
         print(row)
 
-    # Close the cursor and the database connection
-    cursor.close()
-    db.close()
+    cur.close()
+    conn.close()
