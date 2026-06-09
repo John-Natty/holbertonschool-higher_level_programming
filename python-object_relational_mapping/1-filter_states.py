@@ -1,32 +1,35 @@
 #!/usr/bin/python3
 """
-Module that lists all states with names starting with N from hbtn_0e_0_usa
+Module to list state from a database
 """
-import MySQLdb
+
 import sys
+import MySQLdb
 
 if __name__ == "__main__":
-    username = sys.argv[1]
-    password = sys.argv[2]
-    database = sys.argv[3]
 
-    conn = MySQLdb.connect(
+    user = sys.argv[1]
+    password = sys.argv[2]
+    data_base = sys.argv[3]
+
+    db = MySQLdb.connect(
         host="localhost",
         port=3306,
-        user=username,
+        user=user,
         passwd=password,
-        db=database,
-        charset="utf8"
+        db=data_base
     )
 
-    cur = conn.cursor()
+    cursor = db.cursor()
 
-    cur.execute("SELECT * FROM states WHERE name LIKE 'N%' ORDER BY id ASC")
+    cursor.execute("""SELECT * FROM states
+                   WHERE name LIKE BINARY 'N%'
+                   ORDER BY id ASC;""")
+    rows = cursor.fetchall()
 
-    query_rows = cur.fetchall()
-
-    for row in query_rows:
+    for row in rows:
         print(row)
 
-    cur.close()
-    conn.close()
+    # 6. Fermeture propre des ressources
+    cursor.close()
+    db.close()
