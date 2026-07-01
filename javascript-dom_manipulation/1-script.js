@@ -1,0 +1,11 @@
+// Select the header element from the HTML document.
+const header = document.querySelector('header');
+
+// Select the element with the id red_header.
+const redHeader = document.querySelector('#red_header');
+
+// Listen for a click on the redHeader element.
+redHeader.addEventListener('click', function () {
+  // Change the text color of the header to red.
+  header.style.color = '#FF0000';
+});
