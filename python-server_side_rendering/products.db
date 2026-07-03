@@ -1,0 +1,45 @@
+#!/usr/bin/env python3
+"""Create and populate the SQLite products database."""
+
+import sqlite3
+
+
+def create_database():
+    """Create products.db and insert sample products."""
+    # Connect to the SQLite database.
+    # If products.db does not exist, SQLite will create it.
+    conn = sqlite3.connect("products.db")
+
+    # Create a cursor to execute SQL commands.
+    cursor = conn.cursor()
+
+    # Create the Products table if it does not already exist.
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS Products (
+            id INTEGER PRIMARY KEY,
+            name TEXT NOT NULL,
+            category TEXT NOT NULL,
+            price REAL NOT NULL
+        )
+    """)
+
+    # Clear existing data to avoid duplicate insert problems.
+    cursor.execute("DELETE FROM Products")
+
+    # Insert sample products into the Products table.
+    cursor.execute("""
+        INSERT INTO Products (id, name, category, price)
+        VALUES
+        (1, 'Laptop', 'Electronics', 799.99),
+        (2, 'Coffee Mug', 'Home Goods', 15.99)
+    """)
+
+    # Save changes in the database.
+    conn.commit()
+
+    # Close the database connection.
+    conn.close()
+
+
+if __name__ == "__main__":
+    create_database()
