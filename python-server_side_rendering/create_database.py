@@ -2,18 +2,25 @@
 """Create and populate the SQLite products database."""
 
 import sqlite3
+from pathlib import Path
+
+DB_PATH = Path(__file__).resolve().parent / "products.db"
 
 
 def create_database():
     """Create products.db and insert sample products."""
+    # Remove the old database file if it already exists.
+    # This avoids the error: "file is not a database".
+    if DB_PATH.exists():
+        DB_PATH.unlink()
+
     # Connect to the SQLite database.
-    # If products.db does not exist, SQLite will create it.
-    conn = sqlite3.connect("products.db")
+    connection = sqlite3.connect(DB_PATH)
 
     # Create a cursor to execute SQL commands.
-    cursor = conn.cursor()
+    cursor = connection.cursor()
 
-    # Create the Products table if it does not already exist.
+    # Create the Products table.
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS Products (
             id INTEGER PRIMARY KEY,
@@ -23,10 +30,7 @@ def create_database():
         )
     """)
 
-    # Clear existing data to avoid duplicate insert problems.
-    cursor.execute("DELETE FROM Products")
-
-    # Insert sample products into the Products table.
+    # Insert sample products.
     cursor.execute("""
         INSERT INTO Products (id, name, category, price)
         VALUES
@@ -34,11 +38,11 @@ def create_database():
         (2, 'Coffee Mug', 'Home Goods', 15.99)
     """)
 
-    # Save changes in the database.
-    conn.commit()
+    # Save changes.
+    connection.commit()
 
     # Close the database connection.
-    conn.close()
+    connection.close()
 
 
 if __name__ == "__main__":
